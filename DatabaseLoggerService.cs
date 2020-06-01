@@ -44,7 +44,7 @@ namespace VNetDev.LoggerService.Database
         /// <param name="options">Database logger configuration</param>
         private void ReloadOptions(DatabaseLoggerOptions options)
         {
-            _logger.LogWarning($"{nameof(DatabaseLoggerService)} is reloading its configuration, interval changing to {options.SyncInterval} seconds. [{options}]");
+            _logger.LogInformation($"{nameof(DatabaseLoggerService)} is reloading its configuration, interval changing to {options.SyncInterval} seconds. [{options}]");
             _options = options;
             _timer?.Change(TimeSpan.Zero,
                 TimeSpan.FromSeconds(_options.SyncInterval));
@@ -54,9 +54,9 @@ namespace VNetDev.LoggerService.Database
         /// Starts the service runner
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
-        public Task StartAsync(CancellationToken cancellationToken)
+        public virtual Task StartAsync(CancellationToken cancellationToken)
         {
-            _logger.LogWarning($"{nameof(DatabaseLoggerService)} starting up with interval of {_options.SyncInterval} seconds.");
+            _logger.LogInformation($"{nameof(DatabaseLoggerService)} starting up with interval of {_options.SyncInterval} seconds.");
             _timer = new Timer(
                 async _ => await ExecuteAsync(),
                 null,
@@ -83,7 +83,7 @@ namespace VNetDev.LoggerService.Database
         /// Stops the service runner
         /// </summary>
         /// <param name="cancellationToken">Cancellation token</param>
-        public async Task StopAsync(CancellationToken cancellationToken)
+        public virtual async Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation($"{nameof(DatabaseLoggerService)} is stopping! " +
                                    $"In total {_processedCount} logs were processed in {_executionCount} executions.");
@@ -94,7 +94,7 @@ namespace VNetDev.LoggerService.Database
         /// <summary>
         /// Dispose service object
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             _optionsReloadToken?.Dispose();
             _timer?.Dispose();

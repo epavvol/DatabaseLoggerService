@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -23,5 +24,9 @@ namespace VNetDev.LoggerService.Database
         /// <returns>Count of added entries</returns>
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
         internal void AddEntry(DatabaseLoggerLogEntry entry) => GetLoggerDbSet().Add(entry);
+
+        internal async Task AddRangeAsync(IEnumerable<DatabaseLoggerLogEntry> entries,
+            CancellationToken cancellationToken = default) =>
+            await GetLoggerDbSet().AddRangeAsync(entries, cancellationToken);
     }
 }

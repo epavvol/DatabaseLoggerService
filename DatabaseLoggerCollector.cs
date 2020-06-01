@@ -23,7 +23,7 @@ namespace VNetDev.LoggerService.Database
         /// Enumerates log entries in collector
         /// </summary>
         /// <returns>Enumerator of strings</returns>
-        public IEnumerator<string> GetEnumerator() =>
+        public virtual IEnumerator<string> GetEnumerator() =>
             _logQueue
                 .Select(x => x.ToString())
                 .GetEnumerator();

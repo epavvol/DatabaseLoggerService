@@ -11,8 +11,8 @@ namespace VNetDev.LoggerService.Database
     /// </summary>
     public class DatabaseLoggerLogHandler
     {
-        private IDatabaseLoggerDbContext _context;
-        private DatabaseLoggerCollector _logCollector;
+        private readonly IDatabaseLoggerDbContext _context;
+        private readonly DatabaseLoggerCollector _logCollector;
 
         /// <summary>
         /// Constructor
@@ -30,7 +30,7 @@ namespace VNetDev.LoggerService.Database
             var logEntries = new List<DatabaseLoggerLogEntry>();
             while (_logCollector.TryGetEntry(out var entry))
                 logEntries.Add(entry!);
-            await _context.GetLoggerDbSet().AddRangeAsync(logEntries);
+            await _context.AddRangeAsync(logEntries);
             var savedCount = await _context.SaveChangesAsync();
             foreach (var logEntry in logEntries.Where(x => x.Id == 0))
                 _logCollector.AddEntry(logEntry);

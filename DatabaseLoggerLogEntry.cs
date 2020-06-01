@@ -16,40 +16,40 @@ namespace VNetDev.LoggerService.Database
         /// <summary>
         /// Log entry ID
         /// </summary>
-        public long Id { get; set; }
+        public virtual long Id { get; set; }
 
         /// <summary>
         /// Log UTC time
         /// </summary>
-        public DateTime LogUtcTime { get; set; } = DateTime.UtcNow;
+        public virtual DateTime LogUtcTime { get; set; } = DateTime.UtcNow;
 
         /// <summary>
         /// Log source name
         /// </summary>
         [MaxLength(256), Column(TypeName = "varchar(256)")]
-        public string Source { get; set; } = default!;
+        public virtual string Source { get; set; } = default!;
 
         /// <summary>
         /// Log message
         /// </summary>
         [MaxLength(4000)]
-        public string Message { get; set; } = default!;
+        public virtual string Message { get; set; } = default!;
 
         /// <summary>
         /// Log level
         /// </summary>
-        public LogLevel LogLevel { get; set; }
+        public virtual LogLevel LogLevel { get; set; }
 
         /// <summary>
         /// Log Event ID
         /// </summary>
-        public int EventId { get; set; }
+        public virtual int EventId { get; set; }
 
         /// <summary>
         /// Log scope
         /// </summary>
         [MaxLength(512)]
-        public string? Scope
+        public virtual string? Scope
         {
             get => _scope;
             set => _scope = string.IsNullOrWhiteSpace(value)
@@ -60,7 +60,7 @@ namespace VNetDev.LoggerService.Database
         /// <summary>
         /// Log exception
         /// </summary>
-        public string? ExceptionMessage
+        public virtual string? ExceptionMessage
         {
             get => _exceptionMessage;
             set => _exceptionMessage = string.IsNullOrWhiteSpace(value)

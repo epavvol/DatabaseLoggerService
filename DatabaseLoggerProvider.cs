@@ -59,7 +59,7 @@ namespace VNetDev.LoggerService.Database
         /// <summary>
         /// Dispose object
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             foreach (var keyValuePair in _loggers)
                 keyValuePair.Value.Dispose();
@@ -71,7 +71,7 @@ namespace VNetDev.LoggerService.Database
         /// </summary>
         /// <param name="name">Log Source name</param>
         /// <returns>ILogger instance</returns>
-        public ILogger CreateLogger(string name) => _loggers.GetOrAdd(name, CreateLoggerImplementation);
+        public virtual ILogger CreateLogger(string name) => _loggers.GetOrAdd(name, CreateLoggerImplementation);
 
         private DatabaseLogger CreateLoggerImplementation(string name) =>
             new DatabaseLogger(name, _logCollector, _options, new LoggerExternalScopeProvider(), Filter);
