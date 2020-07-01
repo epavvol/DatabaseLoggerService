@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Microsoft.Extensions.Logging;
 
 namespace VNetDev.LoggerService.Database
@@ -72,15 +74,17 @@ namespace VNetDev.LoggerService.Database
             if (formatter == null)
                 throw new ArgumentException(nameof(formatter));
             var message = formatter(state, exception);
-            _logCollector.AddEntry(new DatabaseLoggerLogEntry
+            var exceptionMessage = exception?.ToString();
+            var newEntry = new DatabaseLoggerLogEntry
             {
                 Message = message,
                 Source = _name,
                 EventId = eventId.Id,
                 LogLevel = logLevel,
                 Scope = GetScopeInformation(),
-                ExceptionMessage = exception?.ToString()
-            });
+                ExceptionMessage = exceptionMessage
+            };
+            _logCollector.AddEntry(newEntry);
         }
 
         /// <summary>

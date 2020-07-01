@@ -63,9 +63,7 @@ namespace VNetDev.LoggerService.Database
         public virtual string? ExceptionMessage
         {
             get => _exceptionMessage;
-            set => _exceptionMessage = string.IsNullOrWhiteSpace(value)
-                ? null
-                : value?.Substring(0, 20480);
+            set => _exceptionMessage = string.IsNullOrWhiteSpace(value) ? null : value;
         }
 
         /// <summary>
